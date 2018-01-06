@@ -2,7 +2,6 @@ package com.smalcerz.esperMownit.handler.subscriber.randomTemperature;
 
 import java.util.Map;
 
-import com.smalcerz.esperMownit.event.AbstractEvent;
 import com.smalcerz.esperMownit.event.TemperatureEvent;
 import com.smalcerz.esperMownit.handler.subscriber.CriticalEventSubscriber;
 
@@ -46,8 +45,8 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
      * Listener method called when Esper has detected a pattern match.
      */
     
-    @Override
-    public void update(Map<String, AbstractEvent> eventMap) {
+ 
+    public void update(Map<String, Object> eventMap) {
 
         // 1st Temperature in the Critical Sequence
         TemperatureEvent temp1 = (TemperatureEvent) eventMap.get("temp1");

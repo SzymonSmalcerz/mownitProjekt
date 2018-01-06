@@ -1,7 +1,5 @@
 package com.smalcerz.esperMownit.handler.subscriber;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +16,4 @@ public abstract class MonitorEventSubscriber implements StatementSubscriber {
      * {@inheritDoc}
      */
    
-
-    /**
-     * Listener method called when Esper has detected a pattern match.
-     */
-    public abstract void update(Map<String, Double> eventMap);
 }

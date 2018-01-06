@@ -5,9 +5,6 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalcerz.esperMownit.event.TemperatureEvent;
 import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
 
@@ -17,21 +14,17 @@ import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
  * TemperatureEventHandler.
  */
 
-public class RandomTemperatureEventGenerator {
+public class RandomTemperatureEventGenerator extends Generator{
 
-    /** Logger */
-    private static Logger LOG = LoggerFactory.getLogger(RandomTemperatureEventGenerator.class);
-
-    /** The TemperatureEventHandler - wraps the Esper engine and processes the Events  */
     
-    private TemperatureEventHandler temperatureEventHandler;
-
     /**
      * Creates simple random Temperature events and lets the implementation class handle them.
      */
-    public void startSendingTemperatureReadings(final long noOfTemperatureEvents) {
+	@Override
+    public void startSendingReadings() {
     	
-    	this.temperatureEventHandler = TemperatureEventHandler.getInstance();
+    	final long noOfTemperatureEvents = 1000;
+    	this.eventHandler = TemperatureEventHandler.getInstance();
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
         xrayExecutor.submit(new Runnable() {
@@ -42,7 +35,7 @@ public class RandomTemperatureEventGenerator {
                 int count = 0;
                 while (count < noOfTemperatureEvents) {
                     TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(500), new Date());
-                    temperatureEventHandler.handle(ve);
+                    eventHandler.handle(ve);
                     count++;
                     try {
                         Thread.sleep(200);

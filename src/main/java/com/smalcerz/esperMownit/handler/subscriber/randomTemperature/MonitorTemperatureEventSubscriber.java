@@ -24,7 +24,7 @@ public class MonitorTemperatureEventSubscriber extends MonitorEventSubscriber {
     /**
      * Listener method called when Esper has detected a pattern match.
      */
-    public void update(Map<String, Double> eventMap) {
+    public void update(Map<String, Object> eventMap) {
 
         // average temp over 10 secs
         Double avg = (Double) eventMap.get("avg_val");

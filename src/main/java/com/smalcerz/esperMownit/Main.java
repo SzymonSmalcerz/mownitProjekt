@@ -25,13 +25,6 @@ public class Main {
 
         LOG.debug("Starting...");
 
-        long noOfTemperatureEvents = 1000;
-
-        if (args.length != 1) {
-            LOG.debug("No override of number of events detected - defaulting to " + noOfTemperatureEvents + " events.");
-        } else {
-            noOfTemperatureEvents = Long.valueOf(args[0]);
-        }
 
 //        // Load spring config
 //        ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "application-context.xml" });
@@ -40,7 +33,7 @@ public class Main {
 //        // Start Demo
 //        RandomTemperatureEventGenerator generator = (RandomTemperatureEventGenerator) factory.getBean("eventGenerator");
         RandomTemperatureEventGenerator generator = new RandomTemperatureEventGenerator();
-        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
+        generator.startSendingReadings();
 
     }
 }
