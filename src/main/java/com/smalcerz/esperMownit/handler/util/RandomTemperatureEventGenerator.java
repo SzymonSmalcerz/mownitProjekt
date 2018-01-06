@@ -34,7 +34,7 @@ public class RandomTemperatureEventGenerator extends EventGenerator{
                 
                 int count = 0;
                 while (count < noOfTemperatureEvents) {
-                    TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(500), new Date());
+                    TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(100), new Date());
                     eventHandler.handle(ve);
                     count++;
                     try {

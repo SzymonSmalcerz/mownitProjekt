@@ -12,7 +12,7 @@ import com.profesorfalken.jsensors.model.sensors.Temperature;
 import com.smalcerz.esperMownit.event.TemperatureEvent;
 import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
 
-public class CpuTemperatureEventGenerator extends EventGenerator {
+public class CPUTemperatureEventGenerator extends EventGenerator {
 
 
     /**

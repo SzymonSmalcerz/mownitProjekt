@@ -4,7 +4,8 @@ package com.smalcerz.esperMownit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.smalcerz.esperMownit.handler.util.CpuTemperatureEventGenerator;
+import com.smalcerz.esperMownit.handler.util.CPUUsageEventGenerator;
+import com.smalcerz.esperMownit.handler.util.CPUTemperatureEventGenerator;
 import com.smalcerz.esperMownit.handler.util.RandomTemperatureEventGenerator;
 
 
@@ -36,7 +37,7 @@ public class Main {
 //      RandomTemperatureEventGenerator generator = new RandomTemperatureEventGenerator();
 //      generator.startSendingReadings();
         
-        CpuTemperatureEventGenerator generator = new CpuTemperatureEventGenerator();
+        CPUUsageEventGenerator generator = new CPUUsageEventGenerator();
         generator.startSendingReadings();
         
 
