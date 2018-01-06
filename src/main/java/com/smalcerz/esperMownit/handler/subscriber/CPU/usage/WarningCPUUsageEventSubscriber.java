@@ -44,7 +44,7 @@ public class WarningCPUUsageEventSubscriber extends WarningEventSubscriber {
     /**
      * Listener method called when Esper has detected a pattern match.
      */
-    
+     
     public void update(Map<String, Object> eventMap) {
 
     	UsageEvent usage1 = (UsageEvent) eventMap.get("usage1");
@@ -59,5 +59,7 @@ public class WarningCPUUsageEventSubscriber extends WarningEventSubscriber {
         actualLog += ", TIME OF MEASURES: " + usage1.getTimeOfReading().toString() + ", " + usage2.getTimeOfReading().toString();
         this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
+
+        this.display.append(actualLog);
     }
 }

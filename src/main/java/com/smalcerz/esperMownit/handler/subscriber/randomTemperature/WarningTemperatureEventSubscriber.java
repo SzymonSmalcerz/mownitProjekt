@@ -42,7 +42,7 @@ public class WarningTemperatureEventSubscriber extends WarningEventSubscriber {
     
     /**
      * Listener method called when Esper has detected a pattern match.
-     */
+     */ 
     
     public void update(Map<String, Object> eventMap) {
 
@@ -61,5 +61,7 @@ public class WarningTemperatureEventSubscriber extends WarningEventSubscriber {
         actualLog += ", TIME OF MEASURES: " + temp1.getTimeOfReading().toString() + ", " + temp2.getTimeOfReading().toString();
         this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
+
+        this.display.append(actualLog);
     }
 }

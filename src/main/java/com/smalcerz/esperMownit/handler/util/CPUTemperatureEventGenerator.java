@@ -28,13 +28,10 @@ public class CPUTemperatureEventGenerator extends EventGenerator {
 	@Override
     public void startSendingReadings() {
 		
-		
+		this.running = true;
 		 final Components components = JSensors.get.components();
 
 		    
-		    
-    	
-    	final long noOfTemperatureEvents = 1000;
     	this.eventHandler = new TemperatureEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
@@ -42,9 +39,7 @@ public class CPUTemperatureEventGenerator extends EventGenerator {
             public void run() {
 
                 LOG.debug(getStartingMessage());
-                
-                int count = 0;
-                while (count < noOfTemperatureEvents) {
+                while (running) {
                 	
                 	int averageTemp = 0;
                 	int numOfMeasures = 0;
@@ -72,7 +67,6 @@ public class CPUTemperatureEventGenerator extends EventGenerator {
                 	}
                     TemperatureEvent ve = new TemperatureEvent(averageTemp, new Date());
                     eventHandler.handle(ve);
-                    count++;
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {

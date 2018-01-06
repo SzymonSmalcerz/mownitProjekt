@@ -53,7 +53,7 @@ public class CriticalCPUUsageEventSubscriber extends CriticalEventSubscriber {
     /**
      * Listener method called when Esper has detected a pattern match.
      */
-    
+     
  
     public void update(Map<String, Object> eventMap) {
     	
@@ -63,7 +63,7 @@ public class CriticalCPUUsageEventSubscriber extends CriticalEventSubscriber {
     	UsageEvent usage3 = (UsageEvent) eventMap.get("usage3");
     	UsageEvent usage4 = (UsageEvent) eventMap.get("usage4");
     	
-    	String actualLog = "[ALERT] : CRITICAL EVENT DETECTED! :" + usage1 + " > " + usage2 + " > " + usage3 + " > " + usage4 ;
+    	String actualLog = "\n[ALERT] : CRITICAL EVENT DETECTED! :" + usage1 + " > " + usage2 + " > " + usage3 + " > " + usage4 ;
         StringBuilder sb = new StringBuilder();
         sb.append("***************************************");
         sb.append("\n* "+ actualLog);
@@ -76,6 +76,7 @@ public class CriticalCPUUsageEventSubscriber extends CriticalEventSubscriber {
         
         this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
+        this.display.appendCritical(actualLog);
     }
 
     

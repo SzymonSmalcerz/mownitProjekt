@@ -20,13 +20,13 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
 	}
 
 	/** Used as the minimum starting threshold for a critical event. */
-    private static final String CRITICAL_EVENT_THRESHOLD = "75";
+    private static final String CRITICAL_EVENT_THRESHOLD = "0";
     
     /**
      * If the last event in a critical sequence is this much greater than the first - issue a
      * critical alert.
      */
-    private static final String CRITICAL_EVENT_MULTIPLIER = "1.05";
+    private static final String CRITICAL_EVENT_MULTIPLIER = "1";
     
     /**
      * {@inheritDoc}
@@ -54,8 +54,8 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
     
  
     public void update(Map<String, Object> eventMap) {
-
-        // 1st Temperature in the Critical Sequence
+    	
+    	// 1st Temperature in the Critical Sequence
         TemperatureEvent temp1 = (TemperatureEvent) eventMap.get("temp1");
         // 2nd Temperature in the Critical Sequence
         TemperatureEvent temp2 = (TemperatureEvent) eventMap.get("temp2");
@@ -64,7 +64,7 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
         // 4th Temperature in the Critical Sequence
         TemperatureEvent temp4 = (TemperatureEvent) eventMap.get("temp4");
         
-        String actualLog = "[ALERT] : CRITICAL EVENT DETECTED!" + temp1 + " > " + temp2 + " > " + temp3 + " > " + temp4;
+        String actualLog = "\n[ALERT] : CRITICAL EVENT DETECTED!" + temp1 + " > " + temp2 + " > " + temp3 + " > " + temp4;
         StringBuilder sb = new StringBuilder();
         sb.append("***************************************");
         sb.append("\n*" + actualLog );
@@ -77,6 +77,9 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
         									  temp4.getTimeOfReading().toString() + ", " ;
         this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
+        
+        
+        this.display.appendCritical(actualLog);
     }
 
     

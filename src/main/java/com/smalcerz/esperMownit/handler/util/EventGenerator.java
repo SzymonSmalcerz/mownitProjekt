@@ -17,8 +17,15 @@ public abstract class EventGenerator {
     /** Connection to database*/
     protected MongoCollection<Document> collection;
     
+    protected boolean running;
+    
     public EventGenerator(MongoCollection<Document> collection) {
     	this.collection = collection;
+    	this.running = true;
+    }
+    
+    public void stopSendingReadings() {
+    	this.running = false;
     }
     
     public abstract void startSendingReadings();

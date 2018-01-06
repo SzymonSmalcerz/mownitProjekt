@@ -29,6 +29,7 @@ public class CPUUsageEventGenerator extends EventGenerator {
 	@Override
     public void startSendingReadings() {
 		
+		this.running = true;
 		
 		 
     	this.eventHandler = new CPUUsageEventHandler(this.collection);
@@ -43,7 +44,7 @@ public class CPUUsageEventGenerator extends EventGenerator {
                 HardwareAbstractionLayer hal = si.getHardware();
                 CentralProcessor processor = hal.getProcessor();
                
-               while(true) {
+               while(running) {
             	   UsageEvent ve = new UsageEvent((int) (processor.getSystemCpuLoadBetweenTicks() * 100), new Date());
 
 //            	   UsageEvent ve = new UsageEvent((int) 50, new Date());

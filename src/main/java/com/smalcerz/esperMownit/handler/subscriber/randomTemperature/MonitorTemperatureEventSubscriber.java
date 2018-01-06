@@ -34,7 +34,7 @@ public class MonitorTemperatureEventSubscriber extends MonitorEventSubscriber {
      */
     public void update(Map<String, Object> eventMap) {
 
-        // average temp over 10 secs
+        // average temp over 10 secs 
         Double avg = (Double) eventMap.get("avg_val");
         
         String actualLog = "\n- [MONITOR] Average Temp = " + avg;

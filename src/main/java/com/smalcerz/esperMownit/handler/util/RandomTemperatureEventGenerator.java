@@ -30,7 +30,7 @@ public class RandomTemperatureEventGenerator extends EventGenerator{
 	@Override
     public void startSendingReadings() {
     	
-    	final long noOfTemperatureEvents = 1000;
+		this.running = true;
     	this.eventHandler = new TemperatureEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
@@ -39,11 +39,9 @@ public class RandomTemperatureEventGenerator extends EventGenerator{
 
                 LOG.debug(getStartingMessage());
                 
-                int count = 0;
-                while (count < noOfTemperatureEvents) {
+                while (running) {
                     TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(100), new Date());
                     eventHandler.handle(ve);
-                    count++;
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
