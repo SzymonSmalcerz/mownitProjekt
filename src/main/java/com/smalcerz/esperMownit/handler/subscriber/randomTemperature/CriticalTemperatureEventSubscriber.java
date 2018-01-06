@@ -13,13 +13,13 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
 
 
     /** Used as the minimum starting threshold for a critical event. */
-    private static final String CRITICAL_EVENT_THRESHOLD = "100";
+    private static final String CRITICAL_EVENT_THRESHOLD = "75";
     
     /**
      * If the last event in a critical sequence is this much greater than the first - issue a
      * critical alert.
      */
-    private static final String CRITICAL_EVENT_MULTIPLIER = "1.5";
+    private static final String CRITICAL_EVENT_MULTIPLIER = "1.05";
     
     /**
      * {@inheritDoc}

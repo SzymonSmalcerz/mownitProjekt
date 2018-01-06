@@ -14,7 +14,7 @@ import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
  * TemperatureEventHandler.
  */
 
-public class RandomTemperatureEventGenerator extends Generator{
+public class RandomTemperatureEventGenerator extends EventGenerator{
 
     
     /**

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.smalcerz.esperMownit.handler.EventHandler;
 
-public abstract class Generator {
+public abstract class EventGenerator {
 	/** Logger */
     protected static Logger LOG = LoggerFactory.getLogger(RandomTemperatureEventGenerator.class);
     
