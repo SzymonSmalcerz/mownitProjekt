@@ -1,5 +1,6 @@
 package com.smalcerz.esperMownit.handler;
 
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,8 +8,9 @@ import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.AbstractEvent;
-import com.smalcerz.esperMownit.handler.subscriber.StatementSubscriber;
+import com.smalcerz.esperMownit.handler.subscriber.EventSubscriber;
 
 public abstract class EventHandler {
 	
@@ -22,11 +24,18 @@ public abstract class EventHandler {
 	 protected EPStatement monitorEventStatement;
 
 	   
-	 protected StatementSubscriber criticalEventSubscriber;
-	 protected StatementSubscriber warningEventSubscriber;
-	 protected StatementSubscriber monitorEventSubscriber;
+	 protected EventSubscriber criticalEventSubscriber;
+	 protected EventSubscriber warningEventSubscriber;
+	 protected EventSubscriber monitorEventSubscriber;
 	 
-	  /**
+	 protected MongoCollection<Document> collection;
+	 
+	 
+	 public EventHandler(MongoCollection<Document> collection) {
+		 this.collection = collection;
+	 }
+
+	/**
 	     * EPL to check for a sudden critical rise across 4 events, where the last event is 1.5x greater
 	     * than the first event. This is checking for a sudden, sustained escalating rise in the
 	     * temperature

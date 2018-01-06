@@ -5,6 +5,9 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.TemperatureEvent;
 import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
 
@@ -17,6 +20,10 @@ import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
 public class RandomTemperatureEventGenerator extends EventGenerator{
 
     
+	
+	public RandomTemperatureEventGenerator(MongoCollection<Document> collection) {
+		super(collection);
+	}
     /**
      * Creates simple random Temperature events and lets the implementation class handle them.
      */
@@ -24,7 +31,7 @@ public class RandomTemperatureEventGenerator extends EventGenerator{
     public void startSendingReadings() {
     	
     	final long noOfTemperatureEvents = 1000;
-    	this.eventHandler = TemperatureEventHandler.getInstance();
+    	this.eventHandler = new TemperatureEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
         xrayExecutor.submit(new Runnable() {

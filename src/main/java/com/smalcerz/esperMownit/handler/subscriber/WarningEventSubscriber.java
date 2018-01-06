@@ -1,15 +1,15 @@
 package com.smalcerz.esperMownit.handler.subscriber;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
 
 /**
  * Wraps Esper Statement and Listener. No dependency on Esper libraries.
  */
 
-public abstract class WarningEventSubscriber implements StatementSubscriber {
+public abstract class WarningEventSubscriber extends EventSubscriber {
 
-    /** Logger */
-    protected static Logger LOG = LoggerFactory.getLogger(WarningEventSubscriber.class);
-
+    public WarningEventSubscriber(MongoCollection<Document> collection) {
+    	super(collection);
+    }
 }

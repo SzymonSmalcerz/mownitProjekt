@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.profesorfalken.jsensors.JSensors;
 import com.profesorfalken.jsensors.model.components.Components;
 import com.profesorfalken.jsensors.model.components.Cpu;
@@ -14,7 +17,11 @@ import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
 
 public class CPUTemperatureEventGenerator extends EventGenerator {
 
-
+	
+	
+	public CPUTemperatureEventGenerator(MongoCollection<Document> collection) {
+		super(collection);
+	}
     /**
      * Measures cpu's temperatures and creates Temperature events and lets the implementation class handle them.
      */
@@ -28,7 +35,7 @@ public class CPUTemperatureEventGenerator extends EventGenerator {
 		    
     	
     	final long noOfTemperatureEvents = 1000;
-    	this.eventHandler = TemperatureEventHandler.getInstance();
+    	this.eventHandler = new TemperatureEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
         xrayExecutor.submit(new Runnable() {

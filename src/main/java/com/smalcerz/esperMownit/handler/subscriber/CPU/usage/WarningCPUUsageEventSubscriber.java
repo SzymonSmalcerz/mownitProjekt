@@ -2,6 +2,9 @@ package com.smalcerz.esperMownit.handler.subscriber.CPU.usage;
 
 import java.util.Map;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.UsageEvent;
 import com.smalcerz.esperMownit.handler.subscriber.WarningEventSubscriber;
 
@@ -12,8 +15,13 @@ import com.smalcerz.esperMownit.handler.subscriber.WarningEventSubscriber;
 public class WarningCPUUsageEventSubscriber extends WarningEventSubscriber {
 
 
-    /** If 2 consecutive temperature events are greater than this - issue a warning */
-    private static final String WARNING_EVENT_THRESHOLD = "50";
+    public WarningCPUUsageEventSubscriber(MongoCollection<Document> collection) {
+		super(collection);
+		// TODO Auto-generated constructor stub
+	}
+
+	/** If 2 consecutive temperature events are greater than this - issue a warning */
+    private static final String WARNING_EVENT_THRESHOLD = "75";
 
     
     /**
@@ -41,12 +49,15 @@ public class WarningCPUUsageEventSubscriber extends WarningEventSubscriber {
 
     	UsageEvent usage1 = (UsageEvent) eventMap.get("usage1");
     	UsageEvent usage2 = (UsageEvent) eventMap.get("usage2");
-
+    	
+    	String actualLog = "\n- [WARNING] : CPU USAGE SPIKE DETECTED = " + usage1 + ", " + usage2;
         StringBuilder sb = new StringBuilder();
         sb.append("--------------------------------------------------");
-        sb.append("\n- [WARNING] : CPU USAGE SPIKE DETECTED = " + usage1 + ", " + usage2);
+        sb.append(actualLog);
         sb.append("\n--------------------------------------------------");
-
+        
+        actualLog += ", TIME OF MEASURES: " + usage1.getTimeOfReading().toString() + ", " + usage2.getTimeOfReading().toString();
+        this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
     }
 }

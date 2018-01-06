@@ -1,7 +1,11 @@
 package com.smalcerz.esperMownit.handler.subscriber.CPU.usage;
 
+import java.util.Date;
 import java.util.Map;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.handler.subscriber.MonitorEventSubscriber;
 
 /**
@@ -12,7 +16,12 @@ public class MonitorCPUUsageEventSubscriber extends MonitorEventSubscriber {
 
   
 
-    /**
+    public MonitorCPUUsageEventSubscriber(MongoCollection<Document> collection) {
+		super(collection);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * {@inheritDoc}
      */
     public String getStatement() {
@@ -28,12 +37,14 @@ public class MonitorCPUUsageEventSubscriber extends MonitorEventSubscriber {
 
         // average temp over 10 secs
         Double avg = (Double) eventMap.get("avg_val");
-
+        
+        String actualLog = "\n- [MONITOR] Average cpu usage = " + avg + "%";
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
-        sb.append("\n- [MONITOR] Average cpu usage = " + avg + "%");
+        sb.append(actualLog);
         sb.append("\n---------------------------------");
-
-        LOG.debug(sb.toString());
+        
+        actualLog += ", TIME OF MEASURES: " + new Date().toString();
+        this.saveLogToDatabase(actualLog);
     }
 }

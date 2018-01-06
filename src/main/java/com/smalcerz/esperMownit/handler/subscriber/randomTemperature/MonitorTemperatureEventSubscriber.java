@@ -1,7 +1,11 @@
 package com.smalcerz.esperMownit.handler.subscriber.randomTemperature;
 
+import java.util.Date;
 import java.util.Map;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.handler.subscriber.MonitorEventSubscriber;
 
 /**
@@ -12,7 +16,11 @@ public class MonitorTemperatureEventSubscriber extends MonitorEventSubscriber {
 
   
 
-    /**
+    public MonitorTemperatureEventSubscriber(MongoCollection<Document> collection) {
+		super(collection);
+	}
+
+	/**
      * {@inheritDoc}
      */
     public String getStatement() {
@@ -28,12 +36,14 @@ public class MonitorTemperatureEventSubscriber extends MonitorEventSubscriber {
 
         // average temp over 10 secs
         Double avg = (Double) eventMap.get("avg_val");
-
+        
+        String actualLog = "\n- [MONITOR] Average Temp = " + avg;
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
-        sb.append("\n- [MONITOR] Average Temp = " + avg);
+        sb.append(actualLog);
         sb.append("\n---------------------------------");
-
-        LOG.debug(sb.toString());
+        
+        actualLog += ", TIME OF MEASURES: " + new Date().toString();
+        this.saveLogToDatabase(actualLog);
     }
 }

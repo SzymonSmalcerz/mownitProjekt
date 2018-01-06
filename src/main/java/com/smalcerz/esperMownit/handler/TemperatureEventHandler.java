@@ -1,5 +1,8 @@
 package com.smalcerz.esperMownit.handler;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.CriticalTemperatureEventSubscriber;
 import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.MonitorTemperatureEventSubscriber;
 import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.WarningTemperatureEventSubscriber;
@@ -11,27 +14,19 @@ import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.WarningTemp
 
 public class TemperatureEventHandler extends EventHandler{
 	
-	private static TemperatureEventHandler instance;
+	public TemperatureEventHandler(MongoCollection<Document> collection) {
+		super(collection);
+
+		// LOG.debug("Configuring..");
+	     this.criticalEventSubscriber = new CriticalTemperatureEventSubscriber(collection);
+	     this.warningEventSubscriber = new WarningTemperatureEventSubscriber(collection);
+	     this.monitorEventSubscriber = new MonitorTemperatureEventSubscriber(collection);
+
+	     initService();
+	}
 
     /**
      * Configure Esper Statement(s).
      */
-    
-    private TemperatureEventHandler() {
-		// LOG.debug("Configuring..");
-	     this.criticalEventSubscriber = new CriticalTemperatureEventSubscriber();
-	     this.warningEventSubscriber = new WarningTemperatureEventSubscriber();
-	     this.monitorEventSubscriber = new MonitorTemperatureEventSubscriber();
 
-	     initService();
-	}
-    
-   
-
-    public static synchronized TemperatureEventHandler getInstance() {
-    	if(instance == null) {
-    		instance = new TemperatureEventHandler();
-    	}
-    	return instance;
-    }
 }

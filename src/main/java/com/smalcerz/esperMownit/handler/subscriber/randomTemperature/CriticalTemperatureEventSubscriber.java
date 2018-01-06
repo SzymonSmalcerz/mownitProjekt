@@ -2,6 +2,9 @@ package com.smalcerz.esperMownit.handler.subscriber.randomTemperature;
 
 import java.util.Map;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.TemperatureEvent;
 import com.smalcerz.esperMownit.handler.subscriber.CriticalEventSubscriber;
 
@@ -12,7 +15,11 @@ import com.smalcerz.esperMownit.handler.subscriber.CriticalEventSubscriber;
 public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber {
 
 
-    /** Used as the minimum starting threshold for a critical event. */
+    public CriticalTemperatureEventSubscriber(MongoCollection<Document> collection) {
+		super(collection);
+	}
+
+	/** Used as the minimum starting threshold for a critical event. */
     private static final String CRITICAL_EVENT_THRESHOLD = "75";
     
     /**
@@ -56,13 +63,19 @@ public class CriticalTemperatureEventSubscriber extends CriticalEventSubscriber 
         TemperatureEvent temp3 = (TemperatureEvent) eventMap.get("temp3");
         // 4th Temperature in the Critical Sequence
         TemperatureEvent temp4 = (TemperatureEvent) eventMap.get("temp4");
-
+        
+        String actualLog = "[ALERT] : CRITICAL EVENT DETECTED!" + temp1 + " > " + temp2 + " > " + temp3 + " > " + temp4;
         StringBuilder sb = new StringBuilder();
         sb.append("***************************************");
-        sb.append("\n* [ALERT] : CRITICAL EVENT DETECTED! ");
-        sb.append("\n* " + temp1 + " > " + temp2 + " > " + temp3 + " > " + temp4);
+        sb.append("\n*" + actualLog );
         sb.append("\n***************************************");
-
+        
+        
+        actualLog += ", TIME OF MEASURES: " + temp1.getTimeOfReading().toString() + ", " +
+        									  temp2.getTimeOfReading().toString() + ", " +
+        									  temp3.getTimeOfReading().toString() + ", " +
+        									  temp4.getTimeOfReading().toString() + ", " ;
+        this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
     }
 

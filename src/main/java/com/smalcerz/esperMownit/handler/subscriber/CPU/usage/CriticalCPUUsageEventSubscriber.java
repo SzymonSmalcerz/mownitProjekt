@@ -2,6 +2,9 @@ package com.smalcerz.esperMownit.handler.subscriber.CPU.usage;
 
 import java.util.Map;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.UsageEvent;
 import com.smalcerz.esperMownit.handler.subscriber.CriticalEventSubscriber;
 
@@ -12,14 +15,20 @@ import com.smalcerz.esperMownit.handler.subscriber.CriticalEventSubscriber;
 public class CriticalCPUUsageEventSubscriber extends CriticalEventSubscriber {
 
 
-    /** Used as the minimum starting threshold for a critical event. */
-    private static final String CRITICAL_EVENT_THRESHOLD = "50";
+    public CriticalCPUUsageEventSubscriber(MongoCollection<Document> collection) {
+		super(collection);
+		this.collection.insertOne(new Document("log", "inserted in constructor of eventsubscriber"));
+		
+	}
+
+	/** Used as the minimum starting threshold for a critical event. */
+    private static final String CRITICAL_EVENT_THRESHOLD = "90";
     
     /**
      * If the last event in a critical sequence is this much greater than the first - issue a
      * critical alert.
      */
-    private static final String CRITICAL_EVENT_MULTIPLIER = "1.1";
+    private static final String CRITICAL_EVENT_MULTIPLIER = "1.0";
     
     /**
      * {@inheritDoc}
@@ -53,13 +62,19 @@ public class CriticalCPUUsageEventSubscriber extends CriticalEventSubscriber {
     	UsageEvent usage2 = (UsageEvent) eventMap.get("usage2");
     	UsageEvent usage3 = (UsageEvent) eventMap.get("usage3");
     	UsageEvent usage4 = (UsageEvent) eventMap.get("usage4");
-
+    	
+    	String actualLog = "[ALERT] : CRITICAL EVENT DETECTED! :" + usage1 + " > " + usage2 + " > " + usage3 + " > " + usage4 ;
         StringBuilder sb = new StringBuilder();
         sb.append("***************************************");
-        sb.append("\n* [ALERT] : CRITICAL EVENT DETECTED! ");
-        sb.append("\n* " + usage1 + " > " + usage2 + " > " + usage3 + " > " + usage4 );
+        sb.append("\n* "+ actualLog);
         sb.append("\n***************************************");
-
+        
+        actualLog += ", TIME OF MEASURES: " + usage1.getTimeOfReading().toString() + ", " +
+        									  usage2.getTimeOfReading().toString() + ", " +
+        									  usage3.getTimeOfReading().toString() + ", " +
+        									  usage4.getTimeOfReading().toString() + ", " ;
+        
+        this.saveLogToDatabase(actualLog);
         LOG.debug(sb.toString());
     }
 

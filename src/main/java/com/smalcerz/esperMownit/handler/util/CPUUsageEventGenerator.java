@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.UsageEvent;
 import com.smalcerz.esperMownit.handler.CPUUsageEventHandler;
 import oshi.SystemInfo;
@@ -11,6 +14,14 @@ import oshi.hardware.CentralProcessor;
 import oshi.hardware.HardwareAbstractionLayer;
 
 public class CPUUsageEventGenerator extends EventGenerator {
+	 
+	
+	
+	
+	public CPUUsageEventGenerator(MongoCollection<Document> collection) {
+		super(collection);
+		this.collection.insertOne(new Document("log", "inserted in constructor of eventgenerator"));
+	}
 
 	/**
      * Measures cpu's temperatures and creates Temperature events and lets the implementation class handle them.
@@ -20,7 +31,7 @@ public class CPUUsageEventGenerator extends EventGenerator {
 		
 		
 		 
-    	this.eventHandler = CPUUsageEventHandler.getInstance();
+    	this.eventHandler = new CPUUsageEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
         xrayExecutor.submit(new Runnable() {
@@ -34,7 +45,9 @@ public class CPUUsageEventGenerator extends EventGenerator {
                
                while(true) {
             	   UsageEvent ve = new UsageEvent((int) (processor.getSystemCpuLoadBetweenTicks() * 100), new Date());
-                   eventHandler.handle(ve);
+
+//            	   UsageEvent ve = new UsageEvent((int) 50, new Date());
+            	   eventHandler.handle(ve);
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
