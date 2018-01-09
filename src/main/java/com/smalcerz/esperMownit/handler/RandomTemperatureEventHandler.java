@@ -3,9 +3,9 @@ package com.smalcerz.esperMownit.handler;
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
-import com.smalcerz.esperMownit.handler.subscriber.wheather.pressure.CriticalWheatherPressureEventSubscriber;
-import com.smalcerz.esperMownit.handler.subscriber.wheather.pressure.MonitorWheatherPressureEventSubscriber;
-import com.smalcerz.esperMownit.handler.subscriber.wheather.pressure.WarningWheatherPressureEventSubscriber;
+import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.CriticalTemperatureEventSubscriber;
+import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.MonitorTemperatureEventSubscriber;
+import com.smalcerz.esperMownit.handler.subscriber.randomTemperature.WarningTemperatureEventSubscriber;
 
 /**
  * This class handles incoming Temperature Events. It processes them through the EPService, to which
@@ -18,9 +18,9 @@ public class RandomTemperatureEventHandler extends EventHandler{
 		super(collection);
 
 		// LOG.debug("Configuring..");
-	     this.criticalEventSubscriber = new CriticalWheatherPressureEventSubscriber(collection);
-	     this.warningEventSubscriber = new WarningWheatherPressureEventSubscriber(collection);
-	     this.monitorEventSubscriber = new MonitorWheatherPressureEventSubscriber(collection);
+	     this.criticalEventSubscriber = new CriticalTemperatureEventSubscriber(collection);
+	     this.warningEventSubscriber = new WarningTemperatureEventSubscriber(collection);
+	     this.monitorEventSubscriber = new MonitorTemperatureEventSubscriber(collection);
 
 	     initService();
 	}

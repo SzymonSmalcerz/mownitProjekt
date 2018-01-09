@@ -38,7 +38,7 @@ public class RandomTemperatureEventGenerator extends EventGenerator{
             public void run() {
 
                 LOG.debug(getStartingMessage());
-                
+                System.out.println("TUTAJJJ");
                 while (running) {
                     TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(100), new Date());
                     eventHandler.handle(ve);

@@ -36,12 +36,12 @@ public class Main {
     	MongoCollection<Document> collection = database.getCollection("logCPUsTEST");
     	
     	RandomTemperatureEventGenerator generator = new RandomTemperatureEventGenerator(collection);
-        CPUUsageEventGenerator generatorCPUUsage = new CPUUsageEventGenerator(collection);
-        WeatherPressureEventGenerator WheatherPressuregenerator = new WeatherPressureEventGenerator(collection);
+    	CPUUsageEventGenerator generatorCPUUsage = new CPUUsageEventGenerator(collection);
+        WeatherPressureEventGenerator wheatherPressuregenerator = new WeatherPressureEventGenerator(collection);
 
-        generator.startSendingReadings();
-        generatorCPUUsage.startSendingReadings();
-        WheatherPressuregenerator.startSendingReadings();
+//        generator.startSendingReadings();
+//        generatorCPUUsage.startSendingReadings();
+        wheatherPressuregenerator.startSendingReadings();
         
 
     }
