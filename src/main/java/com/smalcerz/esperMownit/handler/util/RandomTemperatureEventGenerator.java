@@ -9,7 +9,7 @@ import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
 import com.smalcerz.esperMownit.event.TemperatureEvent;
-import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
+import com.smalcerz.esperMownit.handler.RandomTemperatureEventHandler;
 
 
 /**
@@ -31,7 +31,7 @@ public class RandomTemperatureEventGenerator extends EventGenerator{
     public void startSendingReadings() {
     	
 		this.running = true;
-    	this.eventHandler = new TemperatureEventHandler(this.collection);
+    	this.eventHandler = new RandomTemperatureEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
         xrayExecutor.submit(new Runnable() {

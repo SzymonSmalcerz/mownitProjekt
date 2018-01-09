@@ -1,6 +1,7 @@
 package com.smalcerz.esperMownit.frame;
 
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.TextArea;
@@ -53,7 +54,8 @@ public class Display{
 		this.clearButton.addActionListener(new ActionListener() { 
 			
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText("\n");;
+				textArea.setText("\n");
+				textArea.setForeground(Color.BLACK);
 			}
 		});
 		
@@ -66,9 +68,8 @@ public class Display{
 	}
 	
 	public void appendCritical(String str) {
-//		this.textArea.setForeground(Color.RED);
+		this.textArea.setForeground(Color.RED);
 		this.textArea.append(str);
-//		this.textArea.setForeground(Color.BLACK);
 	}
 	public static Display getInstance() {
 		return instance;

@@ -1,4 +1,4 @@
-package com.smalcerz.esperMownit.handler.subscriber.randomTemperature;
+package com.smalcerz.esperMownit.handler.subscriber.CPU.temperature;
 
 import java.util.Map;
 
@@ -12,15 +12,15 @@ import com.smalcerz.esperMownit.handler.subscriber.WarningEventSubscriber;
  * Wraps Esper Statement and Listener. No dependency on Esper libraries.
  */
 
-public class WarningTemperatureEventSubscriber extends WarningEventSubscriber {
+public class WarningCPUTemperatureEventSubscriber extends WarningEventSubscriber {
 
 
-    public WarningTemperatureEventSubscriber(MongoCollection<Document> collection) {
+    public WarningCPUTemperatureEventSubscriber(MongoCollection<Document> collection) {
 		super(collection);
 	}
 
 	/** If 2 consecutive temperature events are greater than this - issue a warning */
-    private static final String WARNING_EVENT_THRESHOLD = "60";
+    private static final String WARNING_EVENT_THRESHOLD = "65";
 
     
     /**

@@ -6,6 +6,7 @@ import org.bson.Document;
 import com.smalcerz.esperMownit.frame.Display;
 import com.smalcerz.esperMownit.handler.util.CPUUsageEventGenerator;
 import com.smalcerz.esperMownit.handler.util.RandomTemperatureEventGenerator;
+import com.smalcerz.esperMownit.handler.util.WeatherPressureEventGenerator;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -30,11 +31,17 @@ public class Main {
 		MongoClient mongoClient = new MongoClient();
     	MongoDatabase database = mongoClient.getDatabase("testDB");
     	
-    	Display display = Display.getInstance();
+    	@SuppressWarnings("unused")
+		Display display = Display.getInstance();
     	MongoCollection<Document> collection = database.getCollection("logCPUsTEST");
+    	
     	RandomTemperatureEventGenerator generator = new RandomTemperatureEventGenerator(collection);
-        //CPUUsageEventGenerator generator = new CPUUsageEventGenerator(collection);
+        CPUUsageEventGenerator generatorCPUUsage = new CPUUsageEventGenerator(collection);
+        WeatherPressureEventGenerator WheatherPressuregenerator = new WeatherPressureEventGenerator(collection);
+
         generator.startSendingReadings();
+        generatorCPUUsage.startSendingReadings();
+        WheatherPressuregenerator.startSendingReadings();
         
 
     }

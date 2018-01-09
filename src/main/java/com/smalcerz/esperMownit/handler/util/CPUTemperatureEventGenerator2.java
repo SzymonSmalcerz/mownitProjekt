@@ -13,13 +13,13 @@ import com.profesorfalken.jsensors.model.components.Components;
 import com.profesorfalken.jsensors.model.components.Cpu;
 import com.profesorfalken.jsensors.model.sensors.Temperature;
 import com.smalcerz.esperMownit.event.TemperatureEvent;
-import com.smalcerz.esperMownit.handler.TemperatureEventHandler;
+import com.smalcerz.esperMownit.handler.CPUTemperatureEventHandler;
 
-public class CPUTemperatureEventGenerator extends EventGenerator {
+public class CPUTemperatureEventGenerator2 extends EventGenerator {
 
 	
 	
-	public CPUTemperatureEventGenerator(MongoCollection<Document> collection) {
+	public CPUTemperatureEventGenerator2(MongoCollection<Document> collection) {
 		super(collection);
 	}
     /**
@@ -32,7 +32,7 @@ public class CPUTemperatureEventGenerator extends EventGenerator {
 		 final Components components = JSensors.get.components();
 
 		    
-    	this.eventHandler = new TemperatureEventHandler(this.collection);
+    	this.eventHandler = new CPUTemperatureEventHandler(this.collection);
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
         xrayExecutor.submit(new Runnable() {
